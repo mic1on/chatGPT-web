@@ -45,6 +45,14 @@ cd api
 python app.py
 ```
 
+## 如果你不想动手
+
+笔者自建了微信公众号：**代码领悟**，您关注后即可直接与AI对话。
+
+公众号搭建chatGPT搭建流程图：
+
+![](https://miclon-job.oss-cn-hangzhou.aliyuncs.com/img/20230210220109.png)
+
 
 ## 答疑
 

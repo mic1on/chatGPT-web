@@ -3,6 +3,10 @@
 ![](https://miclon-job.oss-cn-hangzhou.aliyuncs.com/img/20230210145121.png)
 本项目为`chatgpt`私有化部署，基于`fastapi` `vue3` `chatgpt api`实现。
 
+
+
+- [笔者案例 - 我用AI帮我完成了单子](https://52caiji.com/posts/other/developer-use-openai.html)
+
 ## 快速开始
 
 ### 1. docker 部署

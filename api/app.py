@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
 from model import Message
-from api import completions as api_completions
+import api
 
 app = FastAPI()
 
@@ -35,7 +35,13 @@ async def root():
 
 @app.post("/completions")
 async def completions(message: Message):
-    res = await api_completions(message)
+    res = await api.completions(message)
+    return res
+
+
+@app.get("/credit_summary")
+async def credit_summary():
+    res = await api.credit_summary()
     return res
 
 

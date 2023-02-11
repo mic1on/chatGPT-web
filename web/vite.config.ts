@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import path from 'path'
 import UnoCSS from 'unocss/vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -18,4 +19,9 @@ export default defineConfig({
       resolvers: [AntDesignVueResolver()],
     }),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  }
 })

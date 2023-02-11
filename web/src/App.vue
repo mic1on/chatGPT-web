@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import axios from 'axios'
 import dayjs from 'dayjs'
-import { ClearOutlined, LoadingOutlined } from '@ant-design/icons-vue'
+import { ClearOutlined, LoadingOutlined, RedoOutlined } from '@ant-design/icons-vue'
 import { useStorage } from '@vueuse/core'
+import { completion, creditSummary } from '@/api'
 import Message from './components/message.vue'
 
 const loadding = ref(false)
+const summary = ref({} as any)
 
 const message = ref('')
 const messages = useStorage('messages', [
@@ -17,19 +18,6 @@ const messages = useStorage('messages', [
   },
 ])
 
-const apiCompletion = async (text: string) => {
-  const res = await axios.post('/completions', {
-    model: 'text-davinci-003',
-    prompt: text,
-    max_tokens: 2048,
-    temperature: 0.5,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    top_p: 1,
-  })
-  return res
-}
-
 const sendMessage = async () => {
   loadding.value = true
   const text = message.value
@@ -40,7 +28,7 @@ const sendMessage = async () => {
     time: dayjs().format('HH:mm'),
     type: 1,
   })
-  const res = await apiCompletion(text)
+  const res = await completion(text)
   messages.value.push({
     username: "chatGPT",
     msg: res.data.choices[0].text,
@@ -53,6 +41,16 @@ const sendMessage = async () => {
 const clearMessages = () => {
   messages.value = []
 }
+
+const refushCredit = async () => {
+  loadding.value = true
+  summary.value = await creditSummary()
+  loadding.value = false
+}
+
+onMounted(async () => {
+  await refushCredit()
+})
 </script>
 
 <template>
@@ -68,7 +66,13 @@ const clearMessages = () => {
         </a-popconfirm>
 
       </a-tooltip>
-
+      <span class="float-right pr-3 pt-2">
+        当前余额：{{ summary?.total_available }}
+        <a-tooltip>
+          <template #title>刷新余额</template>
+          <RedoOutlined @click="refushCredit" />
+        </a-tooltip>
+      </span>
     </header>
     <div id="layout-body">
       <main id="main">

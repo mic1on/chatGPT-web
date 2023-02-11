@@ -28,10 +28,10 @@ const sendMessage = async () => {
     time: dayjs().format('HH:mm'),
     type: 1,
   })
-  const res = await completion(text)
+  const data: any = await completion(text)
   messages.value.push({
     username: "chatGPT",
-    msg: res.data.choices[0].text,
+    msg: data.choices[0].text,
     time: dayjs().format('HH:mm'),
     type: 0,
   })

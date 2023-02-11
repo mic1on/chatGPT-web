@@ -58,8 +58,12 @@ python app.py
 
 - 为什么需要`API_KEY`？
 
-`API_KEY`是`chatgpt`的API密钥，通过API_KEY方可调用官方接口，您可以在[chatgpt](https://openai.com/api/)官网申请。`API_KEY`通常是`sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`这种形式。
+`API_KEY`是`chatgpt`的API密钥，通过API_KEY方可调用官方接口，您可以在[chatgpt](https://platform.openai.com/account/api-keys)官网申请。`API_KEY`通常是`sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`这种形式。
 
 - 我想修改项目中版权信息，如何修改？
 
 如果你不懂前端，你可以直接fork项目，替换前端字符串然后提交自己仓库，然后会自动docker构建。但是有个前提，你需要在github actions中配置`DOCKER_USERNAME`和`DOCKER_PASSWORD`，这两个变量是你的docker账号和密码。
+
+- 为什么要内置后端？
+
+前端其实可以直接通过`axios`请求`chatgpt`官方接口，但是为了数据安全，如果前端调用那就会暴露自己的`API_KEY`，所以笔者将前端和后端分离，前端只负责展示，后端负责调用`chatgpt`官方接口。

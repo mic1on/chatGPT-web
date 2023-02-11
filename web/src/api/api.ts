@@ -12,11 +12,11 @@ api.interceptors.response.use(
   },
 )
 
-export function getRequest(config) {
+export function getRequest(config: any) {
   return api.request({ ...config, method: 'GET' })
 }
 
-export function postRequest(config) {
+export function postRequest(config: any) {
   return api.request({ ...config, method: 'POST' })
 }
 

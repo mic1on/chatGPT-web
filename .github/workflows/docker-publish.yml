@@ -16,6 +16,6 @@ jobs:
           dockerFile: Dockerfile
           imageName: miclon/chatgpt
           tag: latest
-          platform: linux/amd64
+          platform: linux/amd64,linux/arm64
           dockerUser: ${{ secrets.DOCKER_USERNAME }}
           dockerPassword: ${{ secrets.DOCKER_PASSWORD }}

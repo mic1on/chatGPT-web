@@ -29,9 +29,10 @@ const sendMessage = async () => {
     type: 1,
   })
   const data: any = await completion(text)
+  const replyMessage = data?.choices ? data.choices[0].text : "我不知道你在说什么"
   messages.value.push({
     username: "chatGPT",
-    msg: data.choices[0].text,
+    msg: replyMessage,
     time: dayjs().format('HH:mm'),
     type: 0,
   })

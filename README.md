@@ -10,6 +10,10 @@
 
 - [笔者案例 - 我用AI帮我完成了单子](https://52caiji.com/posts/other/developer-use-openai.html)
 
+## 更新日志：
+02-15：前端可以自定义`API_KEY`，优先级大于后端自定义的`API_KEY`。
+
+
 ## 快速开始
 
 ### 1. docker 部署

@@ -5,6 +5,7 @@ import { useStorage } from '@vueuse/core'
 import { completion, creditSummary } from '@/api'
 import Message from './components/message.vue'
 
+const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss')
 const loadding = ref(false)
 const summary = ref({} as any)
 
@@ -77,14 +78,34 @@ onMounted(async () => {
     </header>
     <div id="layout-body">
       <main id="main">
-        <div class="px-10 py-5">
-          <Message :message=message v-for="message in messages" :class="message.type ? 'send' : 'replay'" />
+        <div class="flex-1 relative flex flex-col">
+          <!-- header -->
+          <!-- content -->
+          <div class="flex-1 inset-0 overflow-hidden bg-transparent bg-bottom bg-cover flex flex-col">
+            <!-- dialog -->
+            <div class="flex-1 w-full self-center">
+              <div class="relative px-3 py-1 m-auto flex flex-col">
+                <div class="mx-0 my-1 self-center text-xs text-gray-400">
+                  频道已创建
+                </div>
+                <div class="mx-0 my-1 self-center text-xs text-gray-400">
+                  {{ createdAt }}
+                </div>
+                <Message :message=message v-for="message in messages" :class="message.type ? 'send' : 'replay'" />
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <footer id="footer">
-        <div class="px-4 rounded-lg bg-light-100">
-          <a-textarea v-model:value="message" :rows="4" @pressEnter="sendMessage" placeholder="请输入消息..."></a-textarea>
+        <div class="relative p-4 w-full overflow-hidden text-gray-600 focus-within:text-gray-400 flex items-center">
+          <a-textarea v-model:value="message" :auto-size="{ minRows: 2, maxRows: 5 }" placeholder="请输入消息..."
+            class="appearance-none pl-10 py-2 w-full bg-white border border-gray-300 rounded-full text-sm placeholder-gray-800 focus:outline-none focus:border-blue-500 focus:border-blue-500 focus:shadow-outline-blue" />
+          <span class="absolute inset-y-0 right-0 bottom-8 pr-6 flex items-end">
+            <a-button shape="round" type="primary" @click="sendMessage">发送</a-button>
+          </span>
         </div>
+
       </footer>
     </div>
   </div>

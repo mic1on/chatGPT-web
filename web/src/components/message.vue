@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { message as messageTip } from 'ant-design-vue'
-import { CopyOutlined } from '@ant-design/icons-vue'
+import { CopyOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { useClipboard } from '@vueuse/core'
 
 const { text, copy, copied, isSupported } = useClipboard({})
@@ -21,25 +21,17 @@ const copyIt = (msg: string) => {
 </script>
 
 <template>
-  <div class="max-w-200" v-if="message.type === 1">
-    <div class="p1-10 text-gray-400">
-      <span class="pl-1 text-gray-800">{{ message.username }}</span>
-      <span class="pl-3 text-gray-500">{{ message.time }}</span>
-      <CopyOutlined class="pl-3 cursor-pointer" @click="copyIt(message.msg)" />
-    </div>
-    <div class="rounded-lg bg-blue-500 p-1 pl-3 text-light-50">
-      <a-textarea class="a" :value="message.msg" autosize :bordered="false" />
+  <div class="my-2 self-end flex items-center flex-row" v-if="message.type === 1">
+    <CopyOutlined class="pr-2 cursor-pointer self-end !text-gray-400" @click="copyIt(message.msg)" />
+    <div class="p-1 rounded-t-lg rounded-l-lg bg-white shadow text-sm min-w-60 max-w-500">
+      <a-textarea class="a" :value="message.msg" :auto-size="{ minRows: 1 }" :bordered="false" />
     </div>
   </div>
-  <div class="max-w-200" v-else>
-    <div class="text-gray-400">
-      <span class=" pl-1 text-gray-800">{{ message.username }}</span>
-      <span class="pl-3 text-gray-500">{{ message.time }}</span>
-      <CopyOutlined class="pl-3 cursor-pointer" @click="copyIt(message.msg)" />
-      <div class="rounded-lg bg-gray-500 p-1 pl-3 text-white">
-        <a-textarea class="b" :value="message.msg" autosize :bordered="false" />
-      </div>
+  <div class="my-2 self-start flex items-center" v-else>
+    <div class="p-1 rounded-t-lg rounded-r-lg bg-blue-400 text-white shadow text-sm min-w-180 max-w-500">
+      <a-textarea class="b" :value="message.msg" :auto-size="{ minRows: 1 }" :bordered="false" />
     </div>
+    <CopyOutlined class="pl-2 cursor-pointer self-end !text-gray-400" @click="copyIt(message.msg)" />
   </div>
 </template>
 
@@ -49,14 +41,12 @@ const copyIt = (msg: string) => {
 }
 
 .a {
-  width: 100%;
-  color: white;
-  background-color: rgba(59, 130, 246, var(--un-bg-opacity));
+  color: black;
+  background-color: white;
 }
 
 .b {
-  width: 400px;
   color: white;
-  background-color: rgba(107, 114, 128, var(--un-bg-opacity));
+  background-color: rgba(96, 165, 250, var(--un-bg-opacity));
 }
 </style>

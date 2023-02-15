@@ -1,6 +1,9 @@
 ## ChatGPT-WEB
 
-![](https://miclon-job.oss-cn-hangzhou.aliyuncs.com/img/20230210145121.png)
+![](https://miclon-job.oss-cn-hangzhou.aliyuncs.com/img/20230215114940.png)
+
+注意：图中的余额指的是`chatgpt`中`API_KEY`的余额。
+
 本项目为`chatgpt`私有化部署，基于`fastapi` `vue3` `chatgpt api`实现。
 
 

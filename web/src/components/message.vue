@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { message as messageTip } from 'ant-design-vue'
-import { CopyOutlined, UserOutlined } from '@ant-design/icons-vue'
+import { CopyOutlined } from '@ant-design/icons-vue'
 import { useClipboard } from '@vueuse/core'
 
-const { text, copy, copied, isSupported } = useClipboard({})
+const { copy } = useClipboard({})
 type Message = {
   msg: string;
   username: string;

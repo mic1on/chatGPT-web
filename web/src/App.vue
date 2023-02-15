@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { ClearOutlined, LoadingOutlined, RedoOutlined } from '@ant-design/icons-vue'
+import { ClearOutlined, LoadingOutlined, RedoOutlined, KeyOutlined } from '@ant-design/icons-vue'
 import { useStorage } from '@vueuse/core'
 import { completion, creditSummary } from '@/api'
 import Message from './components/message.vue'
 
 const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss')
 const loadding = ref(false)
+const visible = ref(false)
 const summary = ref({} as any)
 
 const message = ref('')
+const api_key = useStorage('api_key', '')
 const messages = useStorage('messages', [
   {
     username: "chatGPT",
@@ -30,7 +32,8 @@ const sendMessage = async () => {
     type: 1,
   })
   const data: any = await completion(text)
-  const replyMessage = data?.choices ? data.choices[0].text : "我不知道你在说什么"
+  console.log(data)
+  const replyMessage = data?.choices ? data.choices[0].text : data?.error?.message
   messages.value.push({
     username: "chatGPT",
     msg: replyMessage,
@@ -49,6 +52,10 @@ const refushCredit = async () => {
   summary.value = await creditSummary()
   loadding.value = false
 }
+const updateApiKey = () => {
+  visible.value = false
+  window.location.reload()
+}
 
 onMounted(async () => {
   await refushCredit()
@@ -66,7 +73,11 @@ onMounted(async () => {
         <a-popconfirm title="确定清除本地所有聊天记录吗?" ok-text="是的" cancel-text="再想想" @confirm="clearMessages">
           <ClearOutlined class="pl-3 cursor-pointer" />
         </a-popconfirm>
+      </a-tooltip>
 
+      <a-tooltip>
+        <template #title>自定义API_KEY</template>
+        <KeyOutlined class="pl-3 cursor-pointer !text-red-400" @click="visible = true" />
       </a-tooltip>
       <span class="float-right pr-3 pt-2">
         当前余额：{{ summary?.total_available }}
@@ -108,6 +119,11 @@ onMounted(async () => {
 
       </footer>
     </div>
+    <a-modal v-model:visible="visible" title="更新API_KEY" @ok="updateApiKey" okText="更新" cancelText="关闭">
+      <a-alert message="API_KEY往往是sk-开头的字符串" type="info" />
+      <div class="mt-2"></div>
+      <a-input v-model:value="api_key" placeholder="请输入API_KEY" />
+    </a-modal>
   </div>
 </template>
 

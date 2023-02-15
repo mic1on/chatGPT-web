@@ -1,4 +1,6 @@
 import { getRequest, postRequest } from "./api";
+import { useStorage } from '@vueuse/core'
+const api_key = useStorage('api_key', '')
 
 export const completion = async (text: string) => {
   const res = await postRequest({
@@ -11,6 +13,9 @@ export const completion = async (text: string) => {
       frequency_penalty: 0,
       presence_penalty: 0,
       top_p: 1,
+    },
+    headers: {
+      api_key: api_key.value,
     }
   })
   return res
@@ -19,5 +24,8 @@ export const completion = async (text: string) => {
 export const creditSummary = async () => {
   return await getRequest({
     url: '/credit_summary',
+    headers: {
+      api_key: api_key.value,
+    }
   })
 }

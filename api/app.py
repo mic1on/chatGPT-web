@@ -1,6 +1,6 @@
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -34,25 +34,20 @@ async def root():
 
 
 @app.post("/completions")
-async def completions(message: Message):
-    res = await api.completions(message)
+async def completions(request: Request, message: Message):
+    api_key = request.headers.get('api_key')
+    res = await api.completions(message, api_key=api_key)
     return res
 
 
 @app.get("/credit_summary")
-async def credit_summary():
-    res = await api.credit_summary()
+async def credit_summary(request: Request):
+    api_key = request.headers.get('api_key')
+    res = await api.credit_summary(api_key=api_key)
     return res
 
 
 if __name__ == '__main__':
-    import os
-    if key := os.environ.get('API_KEY'):
-        if not key.startswith('sk-'):
-            raise ValueError('API_KEY must start with "sk-"')
-    else:
-        raise ValueError('API_KEY not found in environment variables')
-
     import uvicorn
 
     uvicorn.run("app:app", host="0.0.0.0", port=8000)

@@ -7,7 +7,7 @@ API_KEY = os.environ.get('API_KEY')
 
 def check_api_key(func):
     def wrapper(*args, **kwargs):
-        api_key = kwargs.get('api_key', API_KEY)
+        api_key = kwargs.get('api_key', API_KEY) or API_KEY
         if not api_key:
             raise ValueError('API key is required')
         if not api_key.startswith('sk-'):

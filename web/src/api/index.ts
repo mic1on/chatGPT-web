@@ -9,10 +9,13 @@ export const completion = async (text: string) => {
       model: 'text-davinci-003',
       prompt: text,
       max_tokens: 2048,
-      temperature: 0.5,
+      temperature: 0.9,
       frequency_penalty: 0,
       presence_penalty: 0,
-      top_p: 1,
+      stop: [
+        "\nAI:",
+        "\nUser:",
+    ]
     },
     headers: {
       api_key: api_key.value,

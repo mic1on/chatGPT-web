@@ -11,6 +11,7 @@ class Message(BaseModel):
     frequency_penalty: Optional[float] = Field(default=0.0, description="Frequency penalty")
     presence_penalty: Optional[float] = Field(default=0.0, description="Presence penalty")
     top_p: Optional[float] = Field(default=1.0, description="Top p")
+    stop: Optional[list] = Field(default=None, description="Stop sequence")
 
 
 class Token(BaseModel):

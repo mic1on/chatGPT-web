@@ -12,6 +12,7 @@ const summary = ref({} as any)
 
 const message = ref('')
 const api_key = useStorage('api_key', '')
+const continuously = useStorage('continuously', false)
 const messages = useStorage('messages', [
   {
     username: "chatGPT",
@@ -20,18 +21,36 @@ const messages = useStorage('messages', [
     type: 0,
   },
 ])
+const buildMessage = () => {
+  let _messages = []
+  for (let i = 0; i < messages.value.length; i++) {
+    const element = messages.value[i]
+    if (element.type === 0) {
+      _messages.push("AI:\n" + element.msg)
+    } else {
+      _messages.push("User:\n" + element.msg)
+    }
+  }
+  return _messages.join("\n\n") + "\n\AI:\n"
+}
+
 
 const sendMessage = async () => {
   loadding.value = true
-  const text = message.value
-  message.value = ""
   messages.value.push({
     username: "user",
-    msg: text,
+    msg: message.value,
     time: dayjs().format('HH:mm'),
     type: 1,
   })
-  const data: any = await completion(text)
+  let question = ""
+  if (continuously.value) {
+    question = buildMessage()
+  } else {
+    question = "User:\n" + message.value + "\n\nAI:\n"
+  }
+  message.value = ""
+  const data: any = await completion(question)
   console.log(data)
   const replyMessage = data?.choices ? data.choices[0].text : data?.error?.message
   messages.value.push({
@@ -79,6 +98,7 @@ onMounted(async () => {
         <template #title>自定义API_KEY</template>
         <KeyOutlined class="pl-3 cursor-pointer !text-red-400" @click="visible = true" />
       </a-tooltip>
+      <a-checkbox v-model:checked="continuously" class="!text-white !pl-5">连续对话</a-checkbox>
       <span class="float-right pr-3 pt-2">
         当前余额：{{ summary?.total_available }}
         <a-tooltip>
@@ -111,6 +131,7 @@ onMounted(async () => {
       <footer id="footer">
         <div class="relative p-4 w-full overflow-hidden text-gray-600 focus-within:text-gray-400 flex items-center">
           <a-textarea v-model:value="message" :auto-size="{ minRows: 2, maxRows: 5 }" placeholder="请输入消息..."
+            @pressEnter="sendMessage"
             class="appearance-none pl-10 py-2 w-full bg-white border border-gray-300 rounded-full text-sm placeholder-gray-800 focus:outline-none focus:border-blue-500 focus:border-blue-500 focus:shadow-outline-blue" />
           <span class="absolute inset-y-0 right-0 bottom-8 pr-6 flex items-end">
             <a-button shape="round" type="primary" @click="sendMessage">发送</a-button>

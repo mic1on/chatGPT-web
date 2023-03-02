@@ -34,9 +34,11 @@ docker run --name chatgpt -d -p 8000:8000 -e API_KEY=xxxxxx miclon/chatgpt:lates
 ```bash
 cd web
 pnpm install
+pnpm run build
 ```
 
 ```bash
+cp -r web/dist api/dist
 cd api
 pip install -r requirements.txt
 ```

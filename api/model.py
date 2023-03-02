@@ -1,6 +1,17 @@
-from typing import Optional
+from typing import Optional, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
+
+
+class ChatMessageTurbo(BaseModel):
+    role: Optional[str] = Field(default="user", description="Role")
+    content: str = Field(..., description="Content")
+
+
+class MessageTurbo(BaseModel):
+    model: Optional[str] = Field(default="gpt-3.5-turbo", description="Model name")
+    messages: Optional[List[ChatMessageTurbo]] = Field(default=None, description="Messages")
+    stop: Optional[list] = Field(default=None, description="Stop sequence")
 
 
 class Message(BaseModel):

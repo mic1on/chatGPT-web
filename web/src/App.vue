@@ -2,16 +2,18 @@
 import dayjs from 'dayjs'
 import { ClearOutlined, LoadingOutlined, RedoOutlined, KeyOutlined } from '@ant-design/icons-vue'
 import { useStorage } from '@vueuse/core'
-import { completion, creditSummary } from '@/api'
+import { completion, creditSummary, completionTurbo } from '@/api'
 import Message from './components/message.vue'
 
 const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss')
 const loadding = ref(false)
 const visible = ref(false)
 const summary = ref({} as any)
+const models = ref(['text-davinci-003', 'gpt-3.5-turbo'])
 
 const message = ref('')
 const api_key = useStorage('api_key', '')
+const chatModel = useStorage('model', 'text-davinci-003')
 const continuously = useStorage('continuously', false)
 const messages = useStorage('messages', [
   {
@@ -50,9 +52,9 @@ const sendMessage = async () => {
     question = "User:\n" + message.value + "\n\nAI:\n"
   }
   message.value = ""
-  const data: any = await completion(question)
+  const data: any = chatModel.value === 'gpt-3.5-turbo' ? await completionTurbo(question) : await completion(question)
   console.log(data)
-  const replyMessage = data?.choices ? data.choices[0].text : data?.error?.message
+  const replyMessage = data?.choices ? (data.choices[0]?.text ? data.choices[0].text : data.choices[0].message.content) : data?.error?.message
   messages.value.push({
     username: "chatGPT",
     msg: replyMessage,
@@ -99,6 +101,12 @@ onMounted(async () => {
         <KeyOutlined class="pl-3 cursor-pointer !text-red-400" @click="visible = true" />
       </a-tooltip>
       <a-checkbox v-model:checked="continuously" class="!text-white !pl-5">连续对话</a-checkbox>
+
+
+      <a-select ref="select" v-model:value="chatModel" style="width: 180px" class="!pl-4">
+        <a-select-option :value="model" v-for="model in models">{{ model }}</a-select-option>
+      </a-select>
+
       <span class="float-right pr-3 pt-2">
         当前余额：{{ summary?.total_available }}
         <a-tooltip>

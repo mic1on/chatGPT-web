@@ -6,18 +6,16 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
-from model import Message
+from model import Message, MessageTurbo
 import api
 
 app = FastAPI()
-
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DIST_DIR = os.path.join(BASE_DIR, 'dist')
 ASSETS_DIR = os.path.join(DIST_DIR, 'assets')
 app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 templates = Jinja2Templates(directory=DIST_DIR)
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,6 +35,13 @@ async def root():
 async def completions(request: Request, message: Message):
     api_key = request.headers.get('api_key')
     res = await api.completions(message, api_key=api_key)
+    return res
+
+
+@app.post("/completions_turbo")
+async def completions(request: Request, message: MessageTurbo):
+    api_key = request.headers.get('api_key')
+    res = await api.completions_turbo(message, api_key=api_key)
     return res
 
 

@@ -33,6 +33,20 @@ async def completions(message, api_key=None):
 
 
 @check_api_key
+async def completions_turbo(message, api_key=None):
+    """Get completions for the message."""
+    url = "https://api.openai.com/v1/chat/completions"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            url,
+            json=message.dict(),
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=60,
+        )
+        return response.json()
+
+
+@check_api_key
 async def credit_summary(api_key=None):
     """Get the credit summary for the API key."""
     url = "https://api.openai.com/dashboard/billing/credit_grants"

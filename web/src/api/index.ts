@@ -15,7 +15,25 @@ export const completion = async (text: string) => {
       stop: [
         "\nAI:",
         "\nUser:",
-    ]
+      ]
+    },
+    headers: {
+      api_key: api_key.value,
+    }
+  })
+  return res
+}
+
+export const completionTurbo = async (text: string) => {
+  const res = await postRequest({
+    url: '/completions_turbo',
+    data: {
+      model: 'gpt-3.5-turbo',
+      messages: [{ "role": "user", "content": text }],
+      stop: [
+        "\nAI:",
+        "\nUser:",
+      ]
     },
     headers: {
       api_key: api_key.value,

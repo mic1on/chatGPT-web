@@ -1,10 +1,13 @@
-FROM registry.cn-hangzhou.aliyuncs.com/miclon/py-nodejs:latest
-
+FROM registry.cn-hangzhou.aliyuncs.com/miclon/py-nodejs:latest as build
 WORKDIR /app
-# Install app dependencies
 COPY . /app
 RUN cd /app/web && pnpm install && pnpm run build
-RUN cp -r /app/web/dist /app/api/dist
-RUN cd /app/api && pip install -r requirements.txt
 
+FROM python:3.11-slim
+WORKDIR /app
+COPY api/requirements.txt /app/api/requirements.txt
+RUN pip install --no-cache-dir -r api/requirements.txt
+COPY --from=build /app/web/dist /app/api/dist
+COPY start.sh /app
+COPY api /app/api
 CMD ["/bin/bash", "start.sh"]

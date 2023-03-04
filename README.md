@@ -11,7 +11,9 @@
 - [笔者案例 - 我用AI帮我完成了单子](https://52caiji.com/posts/other/developer-use-openai.html)
 
 ## 更新日志：
-03-02: 支持`gpt-3.5-turbo`模型
+03-04：支持代理，环境变量`HTTPS_PROXY`，如`HTTPS_PROXY=http://127.0.0.1:7890`，如果不需要代理，可以不设置。
+
+03-02：支持`gpt-3.5-turbo`模型
 
 02-20：支持了API的**连续对话**
 

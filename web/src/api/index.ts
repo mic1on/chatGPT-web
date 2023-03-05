@@ -1,7 +1,8 @@
 import { getRequest, postRequest } from "./api";
-import { useStorage } from '@vueuse/core'
-const api_key = useStorage('api_key', '')
+import useSetting from "@/composables/setting";
+import { TSummary } from '@/types'
 
+const setting = useSetting()
 export const completion = async (text: string) => {
   const res = await postRequest({
     url: '/completions',
@@ -18,7 +19,7 @@ export const completion = async (text: string) => {
       ]
     },
     headers: {
-      api_key: api_key.value,
+      api_key: setting.value.app_key,
     }
   })
   return res
@@ -36,17 +37,23 @@ export const completionTurbo = async (text: string) => {
       ]
     },
     headers: {
-      api_key: api_key.value,
+      api_key: setting.value.app_key,
     }
   })
   return res
 }
 
-export const creditSummary = async () => {
+interface creditSummaryType {
+  total_available: number;
+  total_granted: number;
+  total_used: number;
+}
+
+export const creditSummary = async (): Promise<creditSummaryType> => {
   return await getRequest({
     url: '/credit_summary',
     headers: {
-      api_key: api_key.value,
+      api_key: setting.value.app_key,
     }
   })
 }

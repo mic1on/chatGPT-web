@@ -57,6 +57,6 @@ const handleOk = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 // scss
 </style>

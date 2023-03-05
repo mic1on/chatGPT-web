@@ -56,7 +56,3 @@ const handleOk = () => {
     </a-modal>
   </div>
 </template>
-
-<style scoped>
-// scss
-</style>

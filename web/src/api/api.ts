@@ -8,15 +8,15 @@ const api = axios.create({
 
 api.interceptors.response.use(
   response => {
-      return Promise.resolve(response.data)
+    return Promise.resolve(response.data)
   },
 )
 
-export function getRequest(config: any) {
+export function getRequest(config: any): Promise<any> {
   return api.request({ ...config, method: 'GET' })
 }
 
-export function postRequest(config: any) {
+export function postRequest(config: any): Promise<any> {
   return api.request({ ...config, method: 'POST' })
 }
 

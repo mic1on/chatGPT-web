@@ -13,21 +13,33 @@
 ## 更新日志：
 03-04：支持代理，环境变量`HTTPS_PROXY`，如`HTTPS_PROXY=http://127.0.0.1:7890`，如果不需要代理，可以不设置。
 
-03-02：支持`gpt-3.5-turbo`模型
+03-02：支持 `gpt-3.5-turbo` 模型
 
 02-20：支持了API的**连续对话**
 
-02-15：前端可以自定义`API_KEY`，优先级大于后端自定义的`API_KEY`。
+02-15：前端可以自定义 `API_KEY` ，优先级大于后端自定义的 `API_KEY` 。
 
 
 ## 快速开始
 
 ### 1. docker 部署
-作者已经将`chatgpt`打包成镜像，可以直接使用`docker`部署。
+作者已经将 `chatgpt` 打包成镜像，可以直接使用 `docker` 部署。
 
 ```bash
 docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx miclon/chatgpt:latest
 ```
+
+使用代理（这里以使用Clash作为代理服务为例）：
+
+- 如果 `Clash` 与 `docker` 在同一台机器，则可以用该命令部署：
+    ```bash
+    docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx -e HTTPS_PROXY=http://127.0.0.1:7890 miclon/chatgpt:latest
+    ```
+
+- 如果 `Clash` 与 `docker` 在同一局域网（或者在同一台机器但宿主机为 `MacOS` 的），则将 `HTTPS_PROXY` 的值改为 `Clash` 所在机器的局域网地址，同时在 `Clash` 中勾选上 `允许局域网连接`，部署示例：
+    ```bash
+    docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx -e HTTPS_PROXY=http://192.168.0.10:7890 miclon/chatgpt:latest
+    ```
 
 ### 2. 本地部署
 

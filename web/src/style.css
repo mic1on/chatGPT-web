@@ -38,4 +38,7 @@ body {
   button {
     background-color: #f9f9f9;
   }
+  p {
+    margin-bottom: 0px !important;
+  }
 }

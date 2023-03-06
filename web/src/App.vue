@@ -139,10 +139,10 @@ onMounted(async () => {
     </div>
     <footer id="footer">
       <div class="relative p-4 w-full overflow-hidden text-gray-600 focus-within:text-gray-400 flex items-center">
-        <a-textarea v-model:value="state.message" :auto-size="{ minRows: 2, maxRows: 5 }" placeholder="请输入消息..."
+        <a-textarea v-model:value="state.message" :auto-size="{ minRows: 3, maxRows: 5 }" placeholder="请输入消息..."
           @pressEnter="sendMessage($event)"
           class="appearance-none pl-10 py-2 w-full bg-white border border-gray-300 rounded-full text-sm placeholder-gray-800 focus:outline-none focus:border-blue-500 focus:border-blue-500 focus:shadow-outline-blue" />
-        <span class="absolute inset-y-0 right-0 bottom-8 pr-6 flex items-end">
+        <span class="absolute inset-y-0 right-0 bottom-6 pr-6 flex items-end">
           <a-button shape="round" type="primary" @click="sendMessage($event)">发送</a-button>
         </span>
       </div>

@@ -2,12 +2,12 @@ import os
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
-from model import Message, MessageTurbo
 import api
+from model import Message, MessageTurbo
 
 app = FastAPI()
 
@@ -16,6 +16,16 @@ DIST_DIR = os.path.join(BASE_DIR, 'dist')
 ASSETS_DIR = os.path.join(DIST_DIR, 'assets')
 app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 templates = Jinja2Templates(directory=DIST_DIR)
+
+
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as exc:
+        return JSONResponse(content={"code": 500, "error": {"message": f"{type(exc)} {exc}"}})
+
+
+app.middleware('http')(catch_exceptions_middleware)
 
 app.add_middleware(
     CORSMiddleware,

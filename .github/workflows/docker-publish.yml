@@ -1,10 +1,11 @@
 name: Publish Docker Image CI
 on:
     workflow_dispatch:
-      tag:
-        description: 'Tag to build'
-        required: true
-        default: 'latest'
+      inputs:
+        tag:
+          description: 'Tag to build'
+          required: true
+          default: 'latest'
 
 jobs:
   build:

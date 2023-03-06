@@ -1,6 +1,6 @@
 ## ChatGPT-WEB
 
-![](https://miclon-job.oss-cn-hangzhou.aliyuncs.com/img/20230305201728.png)
+![](https://miclon-job.oss-cn-hangzhou.aliyuncs.com/img/20230306213958.png)
 
 注意：图中的余额指的是`chatgpt`中`API_KEY`的余额。
 

@@ -29,3 +29,4 @@ docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx -e HTTPS_PROXY=http
 ```
 
 * 注意：上文中端口都是`7890`，具体按你实际情况填写。
+* 注意关闭本机防火墙。

@@ -29,17 +29,7 @@
 docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx miclon/chatgpt:latest
 ```
 
-使用代理（这里以使用Clash作为代理服务为例）：
-
-- 如果 `Clash` 与 `docker` 在同一台机器，则可以用该命令部署：
-    ```bash
-    docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx -e HTTPS_PROXY=http://127.0.0.1:7890 miclon/chatgpt:latest
-    ```
-
-- 如果 `Clash` 与 `docker` 在同一局域网（或者在同一台机器但宿主机为 `MacOS` 的），则将 `HTTPS_PROXY` 的值改为 `Clash` 所在机器的局域网地址，同时在 `Clash` 中勾选上 `允许局域网连接`，部署示例：
-    ```bash
-    docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx -e HTTPS_PROXY=http://192.168.0.10:7890 miclon/chatgpt:latest
-    ```
+代理相关问题移步： [PROXY.md](PROXY.md)
 
 ### 2. 本地部署
 

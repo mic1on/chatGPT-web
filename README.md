@@ -29,6 +29,24 @@
 docker run --name chatgpt -d -p 8000:8000 -e API_KEY=sk-xxxx miclon/chatgpt:latest
 ```
 
+docker-compose 部署
+
+```bash
+version: '3'
+
+services:
+  chatgpt:
+    image: miclon/chatgpt:latest
+    container_name: chatgpt
+    ports:
+      - "8000:8000"
+    environment:
+      # 填写你的 API_KEY
+      - API_KEY=sk-xxxxxx
+      # 填写API请求代理地址
+      - HTTPS_PROXY=http://192.168.1.17:7890
+```
+
 代理相关问题移步： [PROXY.md](PROXY.md)
 
 ### 2. 本地部署

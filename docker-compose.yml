@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  chatgpt:
+    image: miclon/chatgpt:latest
+    container_name: chatgpt
+    ports:
+      - "8000:8000"
+    environment:
+      # 填写你的 API_KEY
+      - API_KEY=sk-xxxxxx
+      # 填写API请求代理地址
+      - HTTPS_PROXY=http://192.168.1.17:7890

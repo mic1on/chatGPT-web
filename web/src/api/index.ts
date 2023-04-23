@@ -3,13 +3,20 @@ import useSetting from "@/composables/setting";
 import { TSummary } from '@/types'
 
 const setting = useSetting()
-export const completion = async (text: string) => {
+export const completion = async (model: string, text: string) => {
+  const max_tokens_dict: { [key: string]: number } = {
+    'text-davinci-003': 4097,
+    'text-davinci-002': 4097,
+    'text-curie-001': 2048,
+    'text-babbage-001': 2048,
+    'text-ada-001': 2048,
+  }
   const res = await postRequest({
     url: '/completions',
     data: {
-      model: 'text-davinci-003',
+      model: model,
       prompt: text,
-      max_tokens: 2048,
+      max_tokens: max_tokens_dict[model] - text.length,
       temperature: 0.9,
       frequency_penalty: 0,
       presence_penalty: 0,

@@ -1,14 +1,30 @@
 <script setup lang="ts">
 import { message as messageTip } from 'ant-design-vue'
 import { Viewer } from '@bytemd/vue-next'
+import breaks from '@bytemd/plugin-breaks'
+import frontmatter from '@bytemd/plugin-frontmatter'
+import gemoji from '@bytemd/plugin-gemoji'
+import gfm from '@bytemd/plugin-gfm'
 import highlight from '@bytemd/plugin-highlight'
+import math from '@bytemd/plugin-math'
+import mediumZoom from '@bytemd/plugin-medium-zoom'
+import mermaid from '@bytemd/plugin-mermaid'
 import 'highlight.js/styles/atom-one-light.css'
 import useMessages from '@/composables/messages'
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import { useClipboard } from '@vueuse/core'
 import { TMessage } from '@/types'
 
-
+const plugins = [
+  breaks(),
+  frontmatter(),
+  gemoji(),
+  gfm(),
+  highlight(),
+  math(),
+  mediumZoom(),
+  mermaid(),
+];
 const messages = useMessages()
 const { copy } = useClipboard({})
 defineProps<{
@@ -31,13 +47,13 @@ const deleteIt = (meseage: TMessage) => {
     <DeleteOutlined class="pr-1 cursor-pointer self-end !text-gray-400" @click="deleteIt(message)" />
     <div class="p-1 rounded-t-lg rounded-l-lg bg-blue-300 shadow text-sm min-w-10 max-w-500">
       <!-- <pre class="max-w-80 !mb-0 m-2">{{ message.msg }}</pre> -->
-      <Viewer class="max-w-120 m-2" :value="message.msg" :plugins="[highlight()]" />
+      <Viewer class="max-w-120 m-2" :value="message.msg" :plugins="plugins" />
     </div>
   </div>
   <div class="my-2 self-start flex items-center" v-else>
     <div class="p-1 rounded-t-lg rounded-r-lg bg-gray-100 text-black shadow text-sm min-w-10">
       <!-- <pre class="max-w-80 !mb-0">{{ message.msg }}</pre> -->
-      <Viewer class="max-w-120 m-2" :value="message.msg" :plugins="[highlight()]" />
+      <Viewer class="max-w-120 m-2" :value="message.msg" :plugins="plugins" />
     </div>
     <CopyOutlined class="pl-2 cursor-pointer self-end !text-gray-400" @click="copyIt(message.msg)" />
     <DeleteOutlined class="pl-1 cursor-pointer self-end !text-gray-400" @click="deleteIt(message)" />

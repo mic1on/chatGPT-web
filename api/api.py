@@ -25,6 +25,7 @@ def check_api_key(func):
 @check_api_key
 async def completions(message, api_key=None):
     """Get completions for the message."""
+    # print('message:', message)
     url = "https://api.openai.com/v1/completions"
     async with httpx.AsyncClient(proxies=PROXIES) as client:
         response = await client.post(
@@ -33,12 +34,14 @@ async def completions(message, api_key=None):
             headers={"Authorization": f"Bearer {api_key}"},
             timeout=60,
         )
+        # print('response:', response.json())
         return response.json()
 
 
 @check_api_key
 async def completions_turbo(message, api_key=None):
     """Get completions for the message."""
+    # print('message:', message)
     url = "https://api.openai.com/v1/chat/completions"
     async with httpx.AsyncClient(proxies=PROXIES) as client:
         response = await client.post(
@@ -47,6 +50,7 @@ async def completions_turbo(message, api_key=None):
             headers={"Authorization": f"Bearer {api_key}"},
             timeout=60,
         )
+        # print('response:', response.json())
         return response.json()
 
 

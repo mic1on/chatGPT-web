@@ -51,7 +51,7 @@ const sendMessage = async (event: { preventDefault: () => void }) => {
     question = "User:\n" + state.message + "\n\nAI:\n"
   }
   state.message = ""
-  const data: any = setting.value.model === 'gpt-3.5-turbo' ? await completionTurbo(question) : await completion(question)
+  const data: any = setting.value.model === 'gpt-3.5-turbo' ? await completionTurbo(question) : await completion(setting.value.model, question)
   const replyMessage = data?.choices ? (data.choices[0]?.text ? data.choices[0].text : data.choices[0].message.content) : data?.error?.message
   messages.addMessage({
     username: "chatGPT",
@@ -182,7 +182,7 @@ html {
 #footer {
   border-top: 1px rgb(228, 228, 228) solid;
   width: 100%;
-  height: 100px;
+  /* height: 100px; */
   flex-shrink: 0;
 }
 

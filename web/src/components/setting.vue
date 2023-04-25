@@ -3,7 +3,7 @@ import useSetting from '@/composables/setting'
 import { SettingOutlined } from '@ant-design/icons-vue'
 
 const setting = useSetting()
-const models = ref(['text-davinci-003', 'gpt-3.5-turbo'])
+const models = ref(['text-davinci-003', 'text-davinci-002', 'text-curie-001', 'text-babbage-001', 'text-ada-001', 'gpt-3.5-turbo'])
 
 const props = defineProps<{
   visible: boolean

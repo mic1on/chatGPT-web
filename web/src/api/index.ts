@@ -1,18 +1,17 @@
 import { getRequest, postRequest } from "./api";
 import useSetting from "@/composables/setting";
-import { TSummary } from '@/types'
 
-const setting = useSetting()
+const setting = useSetting();
 export const completion = async (model: string, text: string) => {
   const max_tokens_dict: { [key: string]: number } = {
-    'text-davinci-003': 4097,
-    'text-davinci-002': 4097,
-    'text-curie-001': 2048,
-    'text-babbage-001': 2048,
-    'text-ada-001': 2048,
-  }
+    "text-davinci-003": 4097,
+    "text-davinci-002": 4097,
+    "text-curie-001": 2048,
+    "text-babbage-001": 2048,
+    "text-ada-001": 2048,
+  };
   const res = await postRequest({
-    url: '/completions',
+    url: "/completions",
     data: {
       model: model,
       prompt: text,
@@ -20,35 +19,31 @@ export const completion = async (model: string, text: string) => {
       temperature: 0.9,
       frequency_penalty: 0,
       presence_penalty: 0,
-      stop: [
-        "\nAI:",
-        "\nUser:",
-      ]
+      stop: ["\nAI:", "\nUser:"],
     },
     headers: {
       api_key: setting.value.app_key,
-    }
-  })
-  return res
-}
+      base_url: setting.value.base_url,
+    },
+  });
+  return res;
+};
 
 export const completionTurbo = async (text: string) => {
   const res = await postRequest({
-    url: '/completions_turbo',
+    url: "/completions_turbo",
     data: {
-      model: 'gpt-3.5-turbo',
-      messages: [{ "role": "user", "content": text }],
-      stop: [
-        "\nAI:",
-        "\nUser:",
-      ]
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: text }],
+      stop: ["\nAI:", "\nUser:"],
     },
     headers: {
       api_key: setting.value.app_key,
-    }
-  })
-  return res
-}
+      base_url: setting.value.base_url,
+    },
+  });
+  return res;
+};
 
 interface creditSummaryType {
   total_available: number;
@@ -58,9 +53,10 @@ interface creditSummaryType {
 
 export const creditSummary = async (): Promise<creditSummaryType> => {
   return await getRequest({
-    url: '/credit_summary',
+    url: "/credit_summary",
     headers: {
       api_key: setting.value.app_key,
-    }
-  })
-}
+      base_url: setting.value.base_url,
+    },
+  });
+};

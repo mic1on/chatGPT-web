@@ -1,18 +1,19 @@
-import { useStorage } from '@vueuse/core'
-
+import { useStorage } from "@vueuse/core";
 
 type Setting = {
-  app_key: string,
-  model: string,
-  continuously: boolean,
-}
+  app_key: string;
+  base_url: string;
+  model: string;
+  continuously: boolean;
+};
 
-const setting = useStorage<Setting>('setting', {
-  app_key: '',
-  model: 'text-davinci-003',
+const setting = useStorage<Setting>("setting", {
+  app_key: "",
+  base_url: "",
+  model: "gpt-3.5-turbo",
   continuously: false,
-})
+});
 
-const useSetting = () => setting
+const useSetting = () => setting;
 
-export default useSetting
+export default useSetting;

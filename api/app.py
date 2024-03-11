@@ -44,21 +44,24 @@ async def root():
 @app.post("/completions")
 async def completions(request: Request, message: Message):
     api_key = request.headers.get('api_key')
-    res = await api.completions(message, api_key=api_key)
+    base_url = request.headers.get('base_url')
+    res = api.completions(message, api_key=api_key, base_url=base_url)
     return res
 
 
 @app.post("/completions_turbo")
 async def completions(request: Request, message: MessageTurbo):
     api_key = request.headers.get('api_key')
-    res = await api.completions_turbo(message, api_key=api_key)
+    base_url = request.headers.get('base_url')
+    res = api.completions_turbo(message, api_key=api_key, base_url=base_url)
     return res
 
 
 @app.get("/credit_summary")
 async def credit_summary(request: Request):
     api_key = request.headers.get('api_key')
-    res = await api.credit_summary(api_key=api_key)
+    base_url = request.headers.get('base_url')
+    res = api.credit_summary(api_key=api_key, base_url=base_url)
     return res
 
 
